@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Plus, Minus, Undo2, Edit3, Upload, Settings, Download } from 'lucide-react';
+import { RotateCcw, Plus, Minus, Undo2, Edit3, Settings, Download } from 'lucide-react';
 
 export default function BasketballScoreboard() {
   const [homeScore, setHomeScore] = useState(0);
@@ -237,23 +237,23 @@ export default function BasketballScoreboard() {
   };
 
   // Update player arrays when needed - removed maxPlayers dependency
-  const expandPlayerArrays = () => {
-    const currentLength = homePlayers.length;
-    const newLength = currentLength + 10; // Expand by 10 when needed
-    
-    setHomePlayers(prev => {
-      const newArray = Array.from({ length: newLength }, (_, i) => 
-        prev[i] || { name: '', fouls: 0, score: 0, scoreHistory: [] }
-      );
-      return newArray;
-    });
-    setVisitorPlayers(prev => {
-      const newArray = Array.from({ length: newLength }, (_, i) => 
-        prev[i] || { name: '', fouls: 0, score: 0 }
-      );
-      return newArray;
-    });
-  };
+  // const expandPlayerArrays = () => {
+  //   const currentLength = homePlayers.length;
+  //   const newLength = currentLength + 10; // Expand by 10 when needed
+  //   
+  //   setHomePlayers(prev => {
+  //     const newArray = Array.from({ length: newLength }, (_, i) => 
+  //       prev[i] || { name: '', fouls: 0, score: 0, scoreHistory: [] }
+  //     );
+  //     return newArray;
+  //   });
+  //   setVisitorPlayers(prev => {
+  //     const newArray = Array.from({ length: newLength }, (_, i) => 
+  //       prev[i] || { name: '', fouls: 0, score: 0 }
+  //     );
+  //     return newArray;
+  //   });
+  // };
 
   // Game clock timer
   useEffect(() => {
@@ -306,7 +306,7 @@ export default function BasketballScoreboard() {
     setCanUndo(true);
     
     // Also add to game event log
-    const timestamp = new Date().toLocaleTimeString();
+    // const timestamp = new Date().toLocaleTimeString();
     let logEntry = `Period ${period}, Remaining time ${formatTime(gameTime)}, `;
     
     if (action === 'teamScore') {
@@ -486,16 +486,16 @@ export default function BasketballScoreboard() {
     setShotClock(defaultShotClock);
   };
 
-  const addScore = (team, points) => {
-    saveToHistory('teamScore', { team, points });
-    if (team === 'home') {
-      setHomeScore(prev => prev + points);
-    } else {
-      setVisitorScore(prev => prev + points);
-    }
-    // Reset shot clock on score
-    setShotClock(defaultShotClock);
-  };
+  // const addScore = (team, points) => {
+  //   saveToHistory('teamScore', { team, points });
+  //   if (team === 'home') {
+  //     setHomeScore(prev => prev + points);
+  //   } else {
+  //     setVisitorScore(prev => prev + points);
+  //   }
+  //   // Reset shot clock on score
+  //   setShotClock(defaultShotClock);
+  // };
 
   const addPlayerScore = (team, playerIndex, points) => {
     saveToHistory('playerScore', { team, playerIndex, points });
