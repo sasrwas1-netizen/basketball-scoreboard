@@ -279,6 +279,24 @@ export default function BasketballScoreboard() {
     return () => clearInterval(interval);
   }, [isShotClockRunning, shotClock]);
 
+  // Load teams from localStorage on component mount
+  useEffect(() => {
+    const savedTeams = localStorage.getItem('basketball-scoreboard-teams');
+    if (savedTeams) {
+      try {
+        const parsedTeams = JSON.parse(savedTeams);
+        setTeams(parsedTeams);
+      } catch (error) {
+        console.error('Failed to load teams from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Save teams to localStorage whenever teams state changes
+  useEffect(() => {
+    localStorage.setItem('basketball-scoreboard-teams', JSON.stringify(teams));
+  }, [teams]);
+
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
